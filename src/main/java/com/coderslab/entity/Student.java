@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.coderslab;
+package com.coderslab.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

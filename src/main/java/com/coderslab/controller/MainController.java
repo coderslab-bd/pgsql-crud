@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.coderslab.Student;
+import com.coderslab.entity.Student;
 import com.coderslab.model.ResponseHelper;
 import com.coderslab.service.StudentService;
 

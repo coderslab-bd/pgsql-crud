@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.coderslab.entity.Student;
+import com.coderslab.entity.Category;
 
 /**
  * @author zubayer
@@ -16,6 +16,6 @@ import com.coderslab.entity.Student;
  */
 @Repository
 @Transactional
-public interface StudentRepository extends JpaRepository<Student, Long>{
+public interface CategoryRepository extends JpaRepository<Category, Long>{
 
 }
