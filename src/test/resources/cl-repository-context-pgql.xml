@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:component-scan
+		base-package="net.m4.netcourier.service" />
+
+	<bean id="keyMap" class="com.metafour.orm.pgsql.PgKeymap">
+		<constructor-arg value="classpath:orm-config-netc.xml"
+			type="java.io.InputStream" />
+	</bean>
+	<bean class="com.metafour.orm.SessionFactory"
+		factory-method="newInstance">
+		<constructor-arg index="0">
+			<util:properties>
+				<prop key="com.metafour.orm.SessionFactory">com.metafour.orm.pgsql.PgSessionFactoryImpl</prop>
+				<prop key="com.metafour.orm.modelbuilder.pkg">com.metafour.netcourier.model.mfsql</prop>
+			</util:properties>
+		</constructor-arg>
+		<property name="dataSource">
+			<jee:jndi-lookup jndi-name="java:comp/env/jdbc/pgDS" />
+		</property>
+		<property name="keyMap">
+			<ref bean="keyMap" />
+		</property>
+		<property name="formatter">
+			<bean class="com.metafour.orm.pgsql.PgFormatter" />
+		</property>
+	</bean>
+
+</beans>

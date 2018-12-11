@@ -14,6 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -26,25 +29,20 @@ import org.springframework.transaction.event.TransactionalEventListenerFactory;
 
 import com.coderslab.entity.Category;
 import com.coderslab.model.RecordStatus;
+import com.coderslab.repository.CategoryRepository;
 import com.coderslab.service.CategoryService;
 
 /**
  * @author zubayer
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("test")
-@ContextConfiguration(classes = {PgsqlCrudApplication.class})
-@TestExecutionListeners({
-	DependencyInjectionTestExecutionListener.class,
-	TransactionalTestExecutionListener.class,
-})
+@RunWith(SpringRunner.class)
 @DataJpaTest
 public class CategoryTestJpa {
 	private static final Logger logger = LoggerFactory.getLogger(CategoryTestJpa.class);
 
-	@Autowired
-	CategoryService categoryService;
+	@Autowired private TestEntityManager testEntityManager;
+	@Autowired private CategoryRepository categoryRepository;
 
 	@Test
 	public void testAddCategory() {
@@ -56,7 +54,7 @@ public class CategoryTestJpa {
 		category.setCreateTime(new Date());
 		category.setCompanyCode("017");
 
-		category = categoryService.saveCategory(category);
+		category = categoryRepository.save(category);
 
 		assertNotNull(category.getCategoryId());
 		logger.info("Saved category is : {}", category.toString());
